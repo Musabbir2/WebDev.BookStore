@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,7 @@ namespace WebDev.BookStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +41,7 @@ namespace WebDev.BookStore
                 app.UseHsts();
             }
 
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -47,10 +49,14 @@ namespace WebDev.BookStore
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
+            app.UseEndpoints( endpoints =>
+             {
+             endpoints.MapDefaultControllerRoute();
+                 //MapGet("/", async context=>
+                //{
+                    //await context.Response.WriteAsync("hello world");
+                //});
+             });
         }
     }
 }
